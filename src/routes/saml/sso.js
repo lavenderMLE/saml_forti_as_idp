@@ -31,6 +31,10 @@ const router = express.Router();
 // If your application only supports IdP-initiated SSO, just make this route is enough
 // This is the assertion service url where SAML Response is sent to
 
+router.get('/metadata', (req, res) => res.header('Content-Type','text/xml').send(sp.getMetadata()));
+
+console.log('slsldkfjlskdjf') ;
+
 const uri_forti_metadata = 'http://fac.eavsrl.it/saml-idp/v7e5xv5te453dv0x/metadata/' ;
 axios.get( uri_forti_metadata )
   .then( response => {
