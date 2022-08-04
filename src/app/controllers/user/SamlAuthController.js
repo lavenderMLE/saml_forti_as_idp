@@ -20,10 +20,9 @@ class SamlAuthController extends ControllerUtils {
         
         const uri_forti_metadata = 'http://fac.eavsrl.it/saml-idp/v7e5xv5te453dv0x/metadata/' ;
 
-        await axios.get( uri_forti_metadata )
-            .then( response => {
-
-                idp = saml.IdentityProvider({
+        try {
+            let response = await axios.get( uri_forti_metadata ) ;
+            idp = saml.IdentityProvider({
                 metadata: response.data,
                 isAssertionEncrypted: true,
                 messageSigningOrder: 'encrypt-then-sign',
@@ -33,14 +32,13 @@ class SamlAuthController extends ControllerUtils {
                 if (response.data ) {                    
                     return next(new AppError(403, 'getAllRecipient', 'recipients does not exist'));
                 }
-
-                
                 // console.log( idp ) ;
                 // const sp = saml.ServiceProvider({
                 //   entityID: 'http://localhost:3000/sso/metadata',
                 // })
-            }) ;
-
+        } catch(err) {
+            console.log(err) ;
+        }           
         
         return res.status(200).json({
             status : "success",
