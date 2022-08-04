@@ -1,4 +1,6 @@
 // This is /routes/sso.js
+import SamlAuthController from '../../app/controllers/user/SamlAuthController';
+
 import axios from 'axios';
 import bodyParser from 'body-parser';
 import { response } from 'express';
@@ -9,6 +11,8 @@ const express = require('express');
 const ServiceProvider = saml.ServiceProvider;
 const IdentityProvider = saml.IdentityProvider;
 const router = express.Router();
+
+
 
 // Configure your endpoint for IdP-initiated / SP-initiated SSO
 // const sp = ServiceProvider({    
@@ -31,24 +35,27 @@ const router = express.Router();
 // If your application only supports IdP-initiated SSO, just make this route is enough
 // This is the assertion service url where SAML Response is sent to
 
-router.get('/metadata', (req, res) => res.header('Content-Type','text/xml').send(sp.getMetadata()));
+// router.get('/metadata', (req, res) => res.header('Content-Type','text/xml').send(sp.getMetadata()));
 
-console.log('slsldkfjlskdjf') ;
+router.get('/metadata', SamlAuthController.getMetaDataInfo() );
 
-const uri_forti_metadata = 'http://fac.eavsrl.it/saml-idp/v7e5xv5te453dv0x/metadata/' ;
-axios.get( uri_forti_metadata )
-  .then( response => {
-    const idp = saml.IdentityProvider({
-      metadata: response.data,
-      isAssertionEncrypted: true,
-      messageSigningOrder: 'encrypt-then-sign',
-      wantLogoutRequestSigned: true
-    }) ;
-    // console.log( idp ) ;
-    // const sp = saml.ServiceProvider({
-    //   entityID: 'http://localhost:3000/sso/metadata',
-    // })
-  }) ;
+
+
+// const uri_forti_metadata = 'http://fac.eavsrl.it/saml-idp/v7e5xv5te453dv0x/metadata/' ;
+
+// await axios.get( uri_forti_metadata )
+//   .then( response => {
+//     const idp = saml.IdentityProvider({
+//       metadata: response.data,
+//       isAssertionEncrypted: true,
+//       messageSigningOrder: 'encrypt-then-sign',
+//       wantLogoutRequestSigned: true
+//     }) ;
+//     // console.log( idp ) ;
+//     // const sp = saml.ServiceProvider({
+//     //   entityID: 'http://localhost:3000/sso/metadata',
+//     // })
+//   }) ;
 
 
 
