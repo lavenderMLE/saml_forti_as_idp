@@ -50,8 +50,8 @@ class App {
     this.server.disable('x-powered-by');
     this.server.use(cors());
     this.server.use(cookieParser());
-    // this.server.use(bodyParser.urlencoded({extended: false}));
-    // this.server.use(bodyParser.json());
+    this.server.use(bodyParser.urlencoded({extended: false}));
+    this.server.use(bodyParser.json());
     // this.server.use(passport.initialize()) ;
     // this.server.use(express.json({
     //   limit: '15kb'
@@ -60,8 +60,8 @@ class App {
     //   crossOriginEmbedderPolicy: false,
     //   crossOriginResourcePolicy : false,
     // })) ;
-    // this.server.use(xss());
-    // this.server.use(hpp()) ;
+    this.server.use(xss());
+    this.server.use(hpp()) ;
     // this.server.use(mongoSanitize());
     // this.server.use('/autoMarket/api', limiter) ;
   }
