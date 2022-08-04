@@ -37,7 +37,7 @@ class SamlAuthController extends ControllerUtils {
         
         return res.status(200).json({
             status : "success",
-            idp: idp,
+            // idp: idp,
         })
     }
 
